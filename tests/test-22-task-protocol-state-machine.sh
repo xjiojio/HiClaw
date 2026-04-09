@@ -14,7 +14,7 @@ if [ $RET -ne 0 ]; then
   test_summary
   exit 1
 fi
-exec_in_manager bash -lc "mc stat \"\${HICLAW_STORAGE_PREFIX}/shared/tasks/${TASK_ID}/meta.json\" >/dev/null 2>&1"
+exec_in_manager bash -lc ". /opt/hiclaw/scripts/lib/hiclaw-env.sh; mc stat \"\${HICLAW_STORAGE_PREFIX}/shared/tasks/${TASK_ID}/meta.json\" >/dev/null 2>&1"
 if [ $? -ne 0 ]; then
   log_fail "meta.json not found in MinIO"
   test_teardown "22-task-protocol-state-machine"
@@ -24,7 +24,7 @@ fi
 exec_in_manager bash -lc "bash /opt/hiclaw/agent/skills/task-management/scripts/manage-task-meta.sh --action set-assignee --task-id ${TASK_ID} --assigned-to alice"
 exec_in_manager bash -lc "bash /opt/hiclaw/agent/skills/task-management/scripts/manage-task-meta.sh --action set-status --task-id ${TASK_ID} --status in_progress"
 exec_in_manager bash -lc "bash /opt/hiclaw/agent/skills/task-management/scripts/manage-task-meta.sh --action set-status --task-id ${TASK_ID} --status completed --result-summary Done"
-META=$(exec_in_manager bash -lc "mc cat \"\${HICLAW_STORAGE_PREFIX}/shared/tasks/${TASK_ID}/meta.json\" | jq -r '.status'")
+META=$(exec_in_manager bash -lc ". /opt/hiclaw/scripts/lib/hiclaw-env.sh; mc cat \"\${HICLAW_STORAGE_PREFIX}/shared/tasks/${TASK_ID}/meta.json\" | jq -r '.status'")
 if [ "${META}" = "completed" ]; then
   log_pass "state-machine completed transition ok"
 else

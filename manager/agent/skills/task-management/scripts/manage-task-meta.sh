@@ -61,8 +61,8 @@ can_transition() {
   local from="$1"
   local to="$2"
   if [ "$from" = "$to" ]; then return 0; fi
-  case "${from}->${to}" in
-    created->assigned|assigned->in_progress|assigned->cancelled|in_progress->completed|in_progress->blocked|in_progress->cancelled|blocked->in_progress|blocked->cancelled) return 0 ;;
+  case "${from}:${to}" in
+    created:assigned|assigned:in_progress|assigned:cancelled|in_progress:completed|in_progress:blocked|in_progress:cancelled|blocked:in_progress|blocked:cancelled) return 0 ;;
     *) return 1 ;;
   esac
 }

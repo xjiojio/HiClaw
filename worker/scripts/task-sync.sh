@@ -38,13 +38,13 @@ case "${ACTION}" in
     ;;
   push)
     if [ -f "${LOCAL_DIR}/plan.md" ]; then
-      mc cp "${LOCAL_DIR}/plan.md" "${REMOTE_DIR}/plan.md" >/dev/null 2>&1 || true
+      mc cp "${LOCAL_DIR}/plan.md" "${REMOTE_DIR}/plan.md" >/dev/null 2>&1
     fi
     if [ -f "${LOCAL_DIR}/result.md" ]; then
-      mc cp "${LOCAL_DIR}/result.md" "${REMOTE_DIR}/result.md" >/dev/null 2>&1 || true
+      mc cp "${LOCAL_DIR}/result.md" "${REMOTE_DIR}/result.md" >/dev/null 2>&1
     fi
     if [ -d "${LOCAL_DIR}/progress" ]; then
-      mc mirror "${LOCAL_DIR}/progress/" "${REMOTE_DIR}/progress/" --overwrite >/dev/null 2>&1 || true
+      mc mirror "${LOCAL_DIR}/progress/" "${REMOTE_DIR}/progress/" --overwrite >/dev/null 2>&1
     fi
     echo '{"code":"OK","message":"pushed plan/result/progress"}'
     ;;
